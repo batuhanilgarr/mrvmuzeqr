@@ -1,0 +1,46 @@
+<!DOCTYPE html>
+<html lang="tr">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>QR Kod Oluşturucu</title>
+    <!-- Bootstrap 5.3 CSS -->
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css" rel="stylesheet">
+    <!-- Custom CSS -->
+    <link href="style.css" rel="stylesheet">
+</head>
+<body>
+    <div class="container py-5">
+        <h1 class="text-center mb-4">QR Kod Oluşturucu</h1>
+        
+        <div class="row justify-content-center mb-4">
+            <div class="col-md-8">
+                <div class="form-group">
+                    <label for="urlInput" class="form-label">Site Linklerini Girin (virgülle ayırın):</label>
+                    <textarea class="form-control mb-3" id="urlInput" rows="4" placeholder="örnek: https://www.site1.com, https://www.site2.com"></textarea>
+                    <button class="btn btn-primary" id="generateBtn">QR Kodları Oluştur</button>
+                </div>
+            </div>
+        </div>
+
+        <div class="row" id="qrCodesContainer">
+            <!-- QR kodları buraya dinamik olarak eklenecek -->
+        </div>
+
+        <div class="text-center mt-4" id="downloadAllContainer" style="display: none;">
+            <button class="btn btn-success" id="downloadAllBtn">Tümünü İndir</button>
+        </div>
+    </div>
+
+    <!-- Bootstrap JS ve Popper.js -->
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/js/bootstrap.bundle.min.js"></script>
+    <!-- QRCode.js kütüphanesi -->
+    <script src="https://cdn.jsdelivr.net/npm/qrcode@1.5.3/build/qrcode.min.js"></script>
+    <!-- JSZip kütüphanesi -->
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/jszip/3.10.1/jszip.min.js"></script>
+    <!-- FileSaver kütüphanesi -->
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/FileSaver.js/2.0.5/FileSaver.min.js"></script>
+    <!-- Custom JS -->
+    <script src="script.js"></script>
+</body>
+</html>

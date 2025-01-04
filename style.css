@@ -1,0 +1,23 @@
+.qr-card {
+    transition: transform 0.2s;
+}
+
+.qr-card:hover {
+    transform: translateY(-5px);
+}
+
+.qr-code-container {
+    background-color: white;
+    padding: 1rem;
+    border-radius: 8px;
+}
+
+.qr-code-container canvas {
+    max-width: 100%;
+    height: auto;
+}
+
+.card-title {
+    word-break: break-all;
+    font-size: 0.9rem;
+}
