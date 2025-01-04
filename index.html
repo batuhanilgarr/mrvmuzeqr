@@ -6,40 +6,103 @@
     <title>QR Kod Oluşturucu</title>
     <!-- Bootstrap 5.3 CSS -->
     <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css" rel="stylesheet">
+    <!-- Google Fonts -->
+    <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;500;600&display=swap" rel="stylesheet">
+    <!-- Font Awesome -->
+    <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css" rel="stylesheet">
+    <!-- AOS Animation -->
+    <link href="https://unpkg.com/aos@2.3.1/dist/aos.css" rel="stylesheet">
     <!-- Custom CSS -->
     <link href="style.css" rel="stylesheet">
 </head>
-<body>
-    <div class="container py-5">
-        <h1 class="text-center mb-4">QR Kod Oluşturucu</h1>
-        
-        <div class="row justify-content-center mb-4">
-            <div class="col-md-8">
-                <div class="form-group">
-                    <label for="urlInput" class="form-label">Site Linklerini Girin (virgülle ayırın):</label>
-                    <textarea class="form-control mb-3" id="urlInput" rows="4" placeholder="örnek: https://www.site1.com, https://www.site2.com"></textarea>
-                    <button class="btn btn-primary" id="generateBtn">QR Kodları Oluştur</button>
+<body class="bg-gradient">
+    <div class="page-wrapper">
+        <nav class="navbar navbar-expand-lg navbar-dark bg-transparent">
+            <div class="container">
+                <a class="navbar-brand" href="#">
+                    <i class="fas fa-qrcode"></i> QR Generator
+                </a>
+            </div>
+        </nav>
+
+        <div class="container py-4 py-lg-5">
+            <div class="row justify-content-center">
+                <div class="col-12 col-lg-10">
+                    <div class="card main-card" data-aos="fade-up">
+                        <div class="card-body p-4 p-lg-5">
+                            <div class="text-center mb-5">
+                                <div class="cat-container">
+                                    <div class="cat-ears">
+                                        <div class="cat-ear"></div>
+                                        <div class="cat-ear"></div>
+                                    </div>
+                                    <div class="cat-circle">
+                                        <i class="fas fa-cat cat-icon"></i>
+                                    </div>
+                                </div>
+                                <h1 class="header-title">QR Kod Oluşturucu</h1>
+                                <div class="header-subtitle">
+                                    <i class="fas fa-magic"></i>
+                                    Birden fazla URL için QR kod oluşturun
+                                    <i class="fas fa-heart"></i>
+                                </div>
+                            </div>
+                            
+                            <div class="row justify-content-center mb-5">
+                                <div class="col-12 col-lg-10">
+                                    <div class="form-group">
+                                        <label for="urlInput" class="form-label">
+                                            <i class="fas fa-link me-2"></i>
+                                            Site Linklerini Girin
+                                        </label>
+                                        <p class="text-muted small mb-3">Her linki virgül ile ayırın</p>
+                                        <textarea class="form-control mb-4 shadow-sm" id="urlInput" rows="4" 
+                                            placeholder="Merve Lutfen linkleri aralarinda virgul olacak sekilde ekler misin :) "></textarea>
+                                        <button class="btn btn-primary btn-lg w-100 shadow generate-btn" id="generateBtn">
+                                            <i class="fas fa-magic me-2"></i>
+                                            QR Kodları Oluştur
+                                        </button>
+                                    </div>
+                                </div>
+                            </div>
+
+                            <div class="row justify-content-center g-4" id="qrCodesContainer">
+                                <!-- QR kodları buraya dinamik olarak eklenecek -->
+                            </div>
+
+                            <div class="text-center mt-4" id="downloadAllContainer" style="display: none;">
+                                <button class="btn btn-success btn-lg shadow-sm download-all-btn" id="downloadAllBtn">
+                                    <i class="fas fa-download me-2"></i>
+                                    Tümünü İndir
+                                </button>
+                            </div>
+                        </div>
+                    </div>
                 </div>
             </div>
         </div>
 
-        <div class="row" id="qrCodesContainer">
-            <!-- QR kodları buraya dinamik olarak eklenecek -->
-        </div>
-
-        <div class="text-center mt-4" id="downloadAllContainer" style="display: none;">
-            <button class="btn btn-success" id="downloadAllBtn">Tümünü İndir</button>
-        </div>
+        <footer class="footer mt-auto py-4">
+            <div class="container text-center">
+                <p class="text-muted mb-0">
+                    <small>
+                        For <i class="fas fa-cat text-danger"></i> Merve
+                    </small>
+                </p>
+            </div>
+        </footer>
     </div>
 
     <!-- Bootstrap JS ve Popper.js -->
     <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/js/bootstrap.bundle.min.js"></script>
     <!-- QRCode.js kütüphanesi -->
-    <script src="https://cdn.jsdelivr.net/npm/qrcode@1.5.3/build/qrcode.min.js"></script>
+    <script src="https://cdn.rawgit.com/davidshimjs/qrcodejs/gh-pages/qrcode.min.js"></script>
     <!-- JSZip kütüphanesi -->
     <script src="https://cdnjs.cloudflare.com/ajax/libs/jszip/3.10.1/jszip.min.js"></script>
     <!-- FileSaver kütüphanesi -->
     <script src="https://cdnjs.cloudflare.com/ajax/libs/FileSaver.js/2.0.5/FileSaver.min.js"></script>
+    <!-- AOS Animation -->
+    <script src="https://unpkg.com/aos@2.3.1/dist/aos.js"></script>
     <!-- Custom JS -->
     <script src="script.js"></script>
 </body>
