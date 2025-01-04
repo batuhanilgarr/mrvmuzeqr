@@ -182,11 +182,24 @@ body {
     overflow: hidden;
     background: white;
     height: 100%;
+    opacity: 0;
+    animation: fadeIn 0.5s ease forwards;
+}
+
+@keyframes fadeIn {
+    from {
+        opacity: 0;
+        transform: translateY(20px);
+    }
+    to {
+        opacity: 1;
+        transform: translateY(0);
+    }
 }
 
 .qr-card:hover {
     transform: translateY(-5px);
-    box-shadow: 0 15px 30px rgba(0,0,0,0.1);
+    box-shadow: 0 15px 30px rgba(0,0,0,0.15);
 }
 
 .qr-code-container {
@@ -197,6 +210,44 @@ body {
     display: flex;
     justify-content: center;
     align-items: center;
+    min-height: 200px;
+}
+
+.qr-code-container canvas {
+    max-width: 100%;
+    height: auto !important;
+    border-radius: 10px;
+}
+
+.card-title {
+    font-size: 1rem;
+    font-weight: 500;
+    color: var(--dark-color);
+    margin: 1rem 0;
+    word-break: break-all;
+    line-height: 1.4;
+}
+
+.download-btn {
+    transition: all 0.3s ease;
+    background: linear-gradient(45deg, var(--primary-color), var(--secondary-color));
+    border: none;
+    font-weight: 500;
+}
+
+.download-btn:hover {
+    transform: translateY(-2px);
+    box-shadow: 0 5px 15px rgba(0,0,0,0.1);
+}
+
+#qrCodesContainer {
+    min-height: 200px;
+    position: relative;
+}
+
+.row.g-4 {
+    --bs-gutter-x: 2rem;
+    --bs-gutter-y: 2rem;
 }
 
 /* Footer Styles */
@@ -287,5 +338,21 @@ body {
 
     .qr-card {
         margin-bottom: 1rem;
+    }
+}
+
+@media (max-width: 768px) {
+    .qr-code-container {
+        padding: 1rem;
+        min-height: 150px;
+    }
+    
+    .card-title {
+        font-size: 0.9rem;
+    }
+    
+    .download-btn {
+        font-size: 0.9rem;
+        padding: 0.5rem 1rem;
     }
 }

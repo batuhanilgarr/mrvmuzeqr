@@ -2,8 +2,10 @@ document.addEventListener('DOMContentLoaded', function() {
     // AOS başlatma
     AOS.init({
         duration: 800,
-        easing: 'ease-in-out',
-        once: true
+        easing: 'ease-out',
+        once: false,
+        mirror: true,
+        offset: 50
     });
 
     const urlInput = document.getElementById('urlInput');
@@ -21,7 +23,6 @@ document.addEventListener('DOMContentLoaded', function() {
         const urls = urlInput.value.split(',').map(url => url.trim()).filter(url => url);
         const validationResults = urls.map(validateUrl);
         
-        // Input'un kenar rengini güncelle
         if (urls.length > 0) {
             if (validationResults.every(result => result.isValid)) {
                 urlInput.style.borderColor = '#02c39a';
@@ -37,7 +38,6 @@ document.addEventListener('DOMContentLoaded', function() {
             generateBtn.disabled = false;
         }
 
-        // Hatalı URL'ler için anlık geri bildirim
         const invalidUrls = validationResults.filter(result => !result.isValid);
         if (invalidUrls.length > 0) {
             showToast('Geçersiz URL(ler) tespit edildi. Lütfen kontrol edin.', 'warning');
@@ -46,28 +46,23 @@ document.addEventListener('DOMContentLoaded', function() {
 
     function validateUrl(url) {
         try {
-            // URL'yi normalize et
             url = url.trim().toLowerCase();
             
-            // Protokol ekle (eğer yoksa)
             if (!url.startsWith('http://') && !url.startsWith('https://')) {
                 url = 'https://' + url;
             }
 
             const urlObj = new URL(url);
             
-            // Geçerli bir hostname kontrolü
             if (!urlObj.hostname.includes('.')) {
                 return { isValid: false, error: 'Geçersiz domain' };
             }
 
-            // Yasaklı karakterler kontrolü
             const forbiddenChars = /[\s<>\\^`{|}]/;
             if (forbiddenChars.test(url)) {
                 return { isValid: false, error: 'URL yasaklı karakterler içeriyor' };
             }
 
-            // Minimum uzunluk kontrolü
             if (urlObj.hostname.length < 3) {
                 return { isValid: false, error: 'Domain çok kısa' };
             }
@@ -88,7 +83,6 @@ document.addEventListener('DOMContentLoaded', function() {
             return;
         }
 
-        // URL'leri doğrula
         const validationResults = urls.map(validateUrl);
         if (!validationResults.every(result => result.isValid)) {
             showToast('Lütfen tüm URL\'lerin geçerli olduğundan emin olun!', 'error');
@@ -98,27 +92,30 @@ document.addEventListener('DOMContentLoaded', function() {
         qrCodesContainer.innerHTML = '';
         downloadAllContainer.style.display = 'block';
 
+        const gridContainer = document.createElement('div');
+        gridContainer.className = 'row g-4 justify-content-center';
+        qrCodesContainer.appendChild(gridContainer);
+
         urls.forEach((url, index) => {
             const col = document.createElement('div');
             col.className = 'col-sm-6 col-md-4 col-lg-3';
-            col.setAttribute('data-aos', 'fade-up');
+            col.setAttribute('data-aos', 'zoom-in');
             col.setAttribute('data-aos-delay', (index * 100).toString());
+            col.setAttribute('data-aos-duration', '800');
 
             const card = document.createElement('div');
             card.className = 'card qr-card shadow-sm h-100';
 
             const cardBody = document.createElement('div');
-            cardBody.className = 'card-body text-center';
+            cardBody.className = 'card-body text-center p-4';
 
             const qrContainer = document.createElement('div');
-            qrContainer.className = 'qr-code-container';
+            qrContainer.className = 'qr-code-container mb-3';
             
-            // URL'yi normalize et
             const validationResult = validateUrl(url);
             const normalizedUrl = validationResult.normalizedUrl;
             const siteName = new URL(normalizedUrl).hostname;
 
-            // QR kod oluşturma
             const qrDiv = document.createElement('div');
             new QRCode(qrDiv, {
                 text: normalizedUrl,
@@ -131,11 +128,11 @@ document.addEventListener('DOMContentLoaded', function() {
             qrContainer.appendChild(qrDiv);
 
             const title = document.createElement('h5');
-            title.className = 'card-title';
+            title.className = 'card-title mb-3';
             title.textContent = siteName;
 
             const downloadBtn = document.createElement('button');
-            downloadBtn.className = 'btn btn-primary btn-sm w-100';
+            downloadBtn.className = 'btn btn-primary btn-sm w-100 download-btn';
             downloadBtn.innerHTML = '<i class="fas fa-download me-2"></i>QR Kodu İndir';
             downloadBtn.onclick = () => downloadSingleQR(qrDiv.querySelector('canvas'), siteName);
 
@@ -144,16 +141,21 @@ document.addEventListener('DOMContentLoaded', function() {
             cardBody.appendChild(downloadBtn);
             card.appendChild(cardBody);
             col.appendChild(card);
-            qrCodesContainer.appendChild(col);
+            gridContainer.appendChild(col);
         });
 
-        // Yumuşak kaydırma efekti
-        qrCodesContainer.scrollIntoView({ 
-            behavior: 'smooth', 
-            block: 'nearest'
-        });
+        setTimeout(() => {
+            qrCodesContainer.scrollIntoView({ 
+                behavior: 'smooth', 
+                block: 'start'
+            });
+        }, 100);
 
         showToast('QR kodları başarıyla oluşturuldu!', 'success');
+        
+        setTimeout(() => {
+            AOS.refresh();
+        }, 500);
     }
 
     function downloadSingleQR(canvas, siteName) {
@@ -217,7 +219,6 @@ document.addEventListener('DOMContentLoaded', function() {
         }
     }
 
-    // Toast stilleri
     const style = document.createElement('style');
     style.textContent = `
         .toast-notification {
