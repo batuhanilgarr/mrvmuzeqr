@@ -117,10 +117,11 @@ document.addEventListener('DOMContentLoaded', function() {
             const siteName = new URL(normalizedUrl).hostname;
 
             const qrDiv = document.createElement('div');
+            qrDiv.className = 'qr-code-inner';
             new QRCode(qrDiv, {
                 text: normalizedUrl,
-                width: 200,
-                height: 200,
+                width: 180,
+                height: 180,
                 colorDark: "#2d3436",
                 colorLight: "#ffffff",
                 correctLevel: QRCode.CorrectLevel.H
@@ -133,7 +134,7 @@ document.addEventListener('DOMContentLoaded', function() {
 
             const downloadBtn = document.createElement('button');
             downloadBtn.className = 'btn btn-primary btn-sm w-100 download-btn';
-            downloadBtn.innerHTML = '<i class="fas fa-download me-2"></i>QR Kodu İndir';
+            downloadBtn.innerHTML = '<i class="fas fa-download me-2"></i>İndir';
             downloadBtn.onclick = () => downloadSingleQR(qrDiv.querySelector('canvas'), siteName);
 
             cardBody.appendChild(qrContainer);

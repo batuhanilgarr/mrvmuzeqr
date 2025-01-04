@@ -220,36 +220,36 @@ body {
 
 .qr-code-container {
     background-color: #f8f9fa;
-    padding: 2rem;
+    padding: 1.5rem;
     border-radius: 15px;
     margin: 0.5rem;
     display: flex;
     justify-content: center;
     align-items: center;
-    min-height: 200px;
+    aspect-ratio: 1;
     position: relative;
     overflow: hidden;
     box-shadow: inset 0 2px 6px rgba(0,0,0,0.03);
 }
 
-.qr-code-container::after {
-    content: '';
-    position: absolute;
-    top: 0;
-    left: 0;
-    right: 0;
-    bottom: 0;
-    background: linear-gradient(
-        135deg,
-        rgba(255,255,255,0.5) 0%,
-        rgba(255,255,255,0) 100%
-    );
-    pointer-events: none;
+.qr-code-inner {
+    width: 180px;
+    height: 180px;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+}
+
+.qr-code-inner img {
+    width: 100% !important;
+    height: 100% !important;
+    object-fit: contain;
 }
 
 .qr-code-container canvas {
+    width: 180px !important;
+    height: 180px !important;
     max-width: 100%;
-    height: auto !important;
     border-radius: 10px;
     transform: scale(0.95);
     transition: transform 0.3s ease;
@@ -271,16 +271,21 @@ body {
 }
 
 .download-btn {
-    transition: all 0.3s ease;
-    background: linear-gradient(45deg, var(--primary-color), var(--secondary-color));
+    transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
+    background: linear-gradient(135deg, var(--primary-color), var(--secondary-color));
     border: none;
-    font-weight: 500;
-    padding: 0.8rem 1.5rem;
+    font-weight: 600;
+    font-size: 0.95rem;
+    padding: 0.85rem 1.5rem;
     border-radius: 12px;
     width: calc(100% - 2rem) !important;
-    margin: 0 1rem;
+    margin: 0.5rem 1rem;
     position: relative;
     overflow: hidden;
+    color: white;
+    text-transform: uppercase;
+    letter-spacing: 0.5px;
+    box-shadow: 0 4px 15px rgba(0,0,0,0.1);
 }
 
 .download-btn::before {
@@ -292,20 +297,45 @@ body {
     height: 100%;
     background: linear-gradient(
         45deg,
-        rgba(255,255,255,0.1) 0%,
+        rgba(255,255,255,0.2) 0%,
         rgba(255,255,255,0) 100%
     );
-    transition: transform 0.3s ease;
-    transform: translateX(-100%);
-}
-
-.download-btn:hover::before {
-    transform: translateX(0);
+    transform: translateX(-100%) rotate(45deg);
+    transition: transform 0.6s cubic-bezier(0.4, 0, 0.2, 1);
 }
 
 .download-btn:hover {
     transform: translateY(-2px);
-    box-shadow: 0 5px 15px rgba(var(--primary-color-rgb), 0.2);
+    box-shadow: 0 6px 20px rgba(var(--primary-color-rgb), 0.25);
+    filter: brightness(1.05);
+}
+
+.download-btn:hover::before {
+    transform: translateX(100%) rotate(45deg);
+}
+
+.download-btn:active {
+    transform: translateY(0);
+    box-shadow: 0 2px 10px rgba(var(--primary-color-rgb), 0.15);
+}
+
+.download-btn i {
+    margin-right: 8px;
+    font-size: 1rem;
+    transition: transform 0.3s ease;
+}
+
+.download-btn:hover i {
+    transform: translateY(-1px);
+}
+
+@media (max-width: 768px) {
+    .download-btn {
+        font-size: 0.85rem;
+        padding: 0.75rem 1.2rem;
+        margin: 0.3rem 0.8rem;
+        width: calc(100% - 1.6rem) !important;
+    }
 }
 
 #qrCodesContainer {
@@ -350,8 +380,10 @@ body {
     }
     
     .download-btn {
-        font-size: 0.9rem;
-        padding: 0.7rem 1.2rem;
+        font-size: 0.85rem;
+        padding: 0.75rem 1.2rem;
+        margin: 0.3rem 0.8rem;
+        width: calc(100% - 1.6rem) !important;
     }
 
     [class*="col-"] {
